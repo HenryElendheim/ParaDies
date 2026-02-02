@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParaDies</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="playerDiv">
+
+        <div id="playerName" class="cube-name"></div>
+
+        <div class="stat-bar">
+            <div id="playerHealth" class="health-bar-fill"></div>
+            <span id="playerHealthText"></span>
+        </div>
+        <br>
+        <div class="extra-stats">
+            <span id="playerLevel"></span>
+            <span id="playerDef"></span>
+        </div>
+
+        <div class="stat-bar">
+            <div id="playerXPBar" class="xp-bar-fill"></div>
+            <span id="playerXPText"></span>
+        </div>
+
+    </div>
+
+    
+
+    <div id="enemyDiv">
+
+        <div id="enemyName" class="cube-name"></div>
+
+        <div class="stat-bar">
+            <div id="enemyHealth" class="health-bar-fill"></div>
+            <span id="enemyHealthText"></span>
+        </div>
+        <br>
+        <div class="extra-stats">
+            <span id="enemyLevel"></span>
+            <span id="enemyDef"></span>
+        </div>
+
+    </div>
+
+
+
+    <div id="narratorDiv">
+        <p id="narrator"></p>
+        <br>
+        <p id="narratorBuffs"></p>
+    </div>
+
+
+    <div id="playerAttackDiv">
+        <button id="attack1" onclick="playerAttack(0)">Attack1</button>
+        <button id="attack2" onclick="playerAttack(1)">Attack2</button>
+        <button id="attack3" onclick="playerAttack(2)">Attack3</button>
+        <button id="attack4" onclick="playerAttack(3)">Attack4</button>
+    </div>
+    <br>
+    <button id="resetGame" onclick="resetGame()">Reset Game</button>
+    <!-- <button onclick="loadGame()">Load</button>
+    <button onclick="saveGame()">Save</button> -->
+
+
+
+
+
+    <script src="saveAndLoad.js"></script>
+    <script src="model.js"></script>
+    <script src="view.js"></script>
+    <script src="controller.js"></script>
+</body>
+
+</html>

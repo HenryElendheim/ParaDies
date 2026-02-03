@@ -1,0 +1,90 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Body background and layout */
+body {
+    background-color: rgb(43, 16, 68);
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+    overflow: hidden;
+    transition: background-image 1s ease;
+}
+
+
+#hubArea {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#hubArea div {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#hubArea div:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px rgb(132, 144, 255);
+}
+
+.chest {
+    background: gold;
+    color: black;
+}
+
+.npc {
+    background: #3f7fff;
+    color: black;
+}
+
+.fight {
+    background: #ff9100;
+    color: black;
+}
+
+.forward {
+    background: #00ffc8;
+    color: black;
+}
+
+.back {
+    background: #7f2fff;
+    color: black;
+}
+
+
+.newspaper {
+    background: #ff4444;
+    color: black;
+
+}
+
+.store {
+    background: #44ff44;
+    color: black;
+
+}
+
+.hidden {
+    display: none;
+}

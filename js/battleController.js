@@ -112,72 +112,90 @@ function enemyAttack() {
 
 
 
+function startBattle() {
+    // Reset currentEnemyIndex for this fight
+    gameState.currentEnemyIndex = 0;
 
+    // Clear defeated enemies for this stage
+    const s = gameState.stages[gameState.stage?.current || 1];
+    s.defeatedEnemies = [];
+
+    // Reset enemy HP
+    gameState.enemies.forEach(e => {
+        e.hp = e.maxHp;
+        e.status = {};
+    });
+
+    // Unlock player turn
+    isTurnLocked = false;
+
+    // Update HUD/HTML
+    updateHTML();
+    updateView();
+}
 
 
 
 // Defeated enemy code
 function enemyDown() {
+    const stageNum = gameState.stage.current;
+    const stageState = gameState.stages[stageNum];
     const index = gameState.currentEnemyIndex;
+    const e = getCurrentEnemy();
 
-    // Save defeated enemy
-    if (!gameState.defeatedEnemies.includes(index)) {
-        gameState.defeatedEnemies.push(index);
+    if (!e) return;
+
+    // Mark defeated
+    if (!stageState.defeatedEnemies.includes(index)) {
+        stageState.defeatedEnemies.push(index);
     }
 
+    // Give XP
     let enemyXP = Math.floor(Math.random() * 10) + 1;
-    p.xp += enemyXP;
+    gameState.player.xp += enemyXP;
     checkLvlUp();
-    // Mark current enemy dead
+
+    // Mark HP 0 and clear status
     e.hp = 0;
     e.status = {};
 
-    updateView();
+    // Show HP 0 and death flash
+    enemyDiv.classList.add("dead");
 
-    // Next enemy
     setTimeout(() => {
-        if (gameState.currentEnemyIndex >= gameState.enemies.length) {
-            // All enemies defeated
-            saveGame();
-            battlesWon++;
-            localStorage.setItem("battlesWon", battlesWon);
-            window.location.href = "hub.html";
-        } else {
-            // Reset stats for next enemy
-            const nextE = getCurrentEnemy();
-
-            isTurnLocked = false;
-            updateView();
-        }
-    }, 1000);
+        nextEnemy();
+    }, 780); // delay so you can see the death animation
 }
-
 
 
 
 
 function nextEnemy() {
-
-    gameState.currentEnemyIndex++; // move to next enemy
-
     const e = getCurrentEnemy();
 
-    // No enemies left
     if (!e) {
+        // All enemies defeated
         saveGame();
         battlesWon++;
         localStorage.setItem("battlesWon", battlesWon);
         window.location.href = "hub.html";
+        console.log("Battle won")
         return;
     }
 
-    // Reset enemy
+
+
+    // Reset enemy stats
     e.hp = e.maxHp;
     e.status = {};
+
+    // Remove death class from previous enemy
+    enemyDiv.classList.remove("dead");
 
     isTurnLocked = false;
     updateView();
 }
+
 
 
 

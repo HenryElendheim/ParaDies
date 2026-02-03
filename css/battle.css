@@ -65,6 +65,14 @@ button#resetGame:hover {
 }
 
 
+#enemyDiv.dead {
+    animation: fadeOut 0.8s forwards;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-20px); }
+}
 
 
 

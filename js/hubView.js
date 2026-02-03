@@ -29,6 +29,7 @@ function updateHub() {
     <button onclick="saveGame()">Save</button> -->
 `;
     loadStage();
+    hubAreaInteractables();
 }
 
 

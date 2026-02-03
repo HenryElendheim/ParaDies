@@ -74,6 +74,36 @@ const gameState = loadGame() || {
             xpDrop: 5,
             status: {}
         },
+        {
+            name: "Protector 4",
+            hp: 10,
+            maxHp: 10,
+            level: 1,
+            def: 2,
+            atk: 1,
+            xpDrop: 5,
+            status: {}
+        },
+        {
+            name: "Protector 5",
+            hp: 12,
+            maxHp: 12,
+            level: 2,
+            def: 3,
+            atk: 2,
+            xpDrop: 5,
+            status: {}
+        },
+        {
+            name: "Protector 6",
+            hp: 15,
+            maxHp: 15,
+            level: 3,
+            def: 4,
+            atk: 3,
+            xpDrop: 5,
+            status: {}
+        },
     ],
     defeatedEnemies: [],
     currentEnemyIndex: 0,

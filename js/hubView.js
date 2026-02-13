@@ -87,7 +87,6 @@ function loadStage() {
 
 
 
-
 function changeBackground() {
     switch (stage) {
         case 1:

@@ -1,6 +1,3 @@
-
-
-
 // Manual testing
 document.addEventListener("keydown", (e) => {
     if (e.key === "k") {
@@ -25,6 +22,7 @@ function hubAreaInteractables() {
         }
 
     });
+
 
 
     document.querySelectorAll("#hubArea div").forEach(el => {
@@ -67,6 +65,7 @@ function hubAreaInteractables() {
                 const name = el.dataset.name || "Unknown";
                 alert(`You talked to ${name}.`);
             }
+
 
 
             if (el.classList.contains("fight")) {
@@ -128,12 +127,9 @@ function hubAreaInteractables() {
             if (el.classList.contains("store")) {
                 fadeToPage("store.html");
             }
-
         });
-
     });
 }
-
 
 
 

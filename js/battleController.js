@@ -169,7 +169,6 @@ function enemyDown() {
 
 
 
-
 function nextEnemy() {
     const e = getCurrentEnemy();
 
@@ -198,8 +197,6 @@ function nextEnemy() {
 
 
 
-
-
 function markEnemyDefeated(enemyIndex) {
     const s = gameState.stages[stage];
     if (!s.defeatedEnemies.includes(enemyIndex)) {
@@ -210,23 +207,196 @@ function markEnemyDefeated(enemyIndex) {
 
 
 
-
-
 // Level up code
-function checkLvlUp() {
-    if (p.xp >= p.xpToNext) {
-        p.level++;
-        p.maxHp += 5;
-        p.atk += 3;
-        p.hp = p.maxHp;
-        p.xp = 0;
-        p.def = 2 + p.level,
+// Checks if player has enough XP to level up
+function checkLvlUp(max = 30) {
 
-            p.xpToNext += 5;
+    const p = gameState.player;
+
+    // Keep leveling up as long as we have enough XP
+    while (p.xp >= p.xpToNext && p.level < max) {
+
+        // Remove XP used for this level
+        p.xp -= p.xpToNext;
+
+        // Increase level
+        p.level++;
+
+
+        // Increase max HP every level
+        p.maxHp += 5;
+
+        // Heal player to full on level up
+        p.hp = p.maxHp;
+
+
+        // If player hit max level
+        if (p.level === max) {
+
+            // Stop XP growth
+            p.xpToNext = "Max";
+
+        } else {
+
+            // Make next level harder (30% more XP)
+            p.xpToNext = Math.floor(p.xpToNext * 1.3);
+        }
+
+
+        // Give rewards for this new level
+        levelRewards(gameState);
+    }
+
+    // Update HUD + save
+    updateView();
+}
+
+
+
+// Creates a list of level rewards
+function generateRewards(max = 30) {
+
+    const rewards = [];
+
+    // Loop through every level
+    for (let i = 1; i <= max; i++) {
+
+        // Every 5 levels → +2 DEF
+        if (p.level % 5 === 0) {
+            p.def += 2
+        }
+
+        // Every 10 levels → +5 ATK
+        if (p.level % 10 === 0) {
+            p.atk += 5
+        }
+    }
+
+    return rewards;
+}
+
+
+
+// Gives player rewards when they level up
+function levelRewards(gameState, max = 30) {
+
+    const p = gameState.player;
+
+    // Get list of all rewards
+    const rewards = generateRewards(max);
+
+
+    // Create reward history if missing
+    // (prevents getting same reward twice)
+    if (!p.appliedRewards) {
+        p.appliedRewards = [];
+    }
+
+
+    // Loop through all rewards
+    rewards.forEach(reward => {
+
+        // If player is high enough level
+        if (p.level >= reward.level) {
+
+            // If already got this reward → skip
+            if (p.appliedRewards.includes(reward.level)) return;
+
+
+            // Add DEF if reward has it
+            if (reward.def) {
+                p.def += reward.def;
+            }
+
+            // Add ATK if reward has it
+            if (reward.atk) {
+                p.atk += reward.atk;
+            }
+
+
+            // Save that this reward was used
+            p.appliedRewards.push(reward.level);
+        }
+    });
+
+
+    // Unlock attacks based on level
+    p.attacks.forEach(attack => {
+
+        // If high enough level AND not unlocked yet
+        if (
+            p.level >= attack.minLvl &&
+            !p.unlockedAttacks.includes(attack.name)
+        ) {
+            p.unlockedAttacks.push(attack.name);
+        }
+    });
+
+
+    // Save progress
+    saveGame(gameState);
+}
+
+
+
+function unlockAttack(name) {
+    const allAttacks = {
+        "Backhand": {
+            name: "Backhand",
+            power: 2
+        },
+        "Cut": {
+            name: "Cut",
+            power: 3,
+            effect: [
+                { type: "bleed", affects: "hp", value: 2, turns: 3 },
+            ]
+        },
+        "Break armor": {
+            name: "Break armor",
+            power: 0,
+            atkType: "debuff",
+            effect: [
+                { type: "defDown", affects: "def", value: -2, turns: 3 },
+            ]
+        }
+    };
+
+    // Already unlocked?
+    if (p.attacks.some(a => a.name === name)) return;
+
+    if (allAttacks[name]) {
+        p.attacks.push(allAttacks[name]);
     }
 }
 
 
+
+function unlockAttacksByLevel() {
+
+    p.attacks.forEach(attack => {
+
+        if (
+            p.level >= attack.requiredLevel &&
+            !p.unlockedAttacks.includes(attack.name)
+        ) {
+            p.unlockedAttacks.push(attack.name);
+
+            showNarrator(`${attack.name} unlocked!`);
+        }
+
+    });
+}
+
+
+
+function checkLvlEnemy() {
+    e.level++;
+    e.maxHp += 5;
+    e.atk += 3;
+    e.hp = e.maxHp;
+    e.def = 2 + e.level;
+}
 
 
 

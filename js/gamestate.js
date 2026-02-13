@@ -5,29 +5,42 @@ const gameState = loadGame() || {
         required: 3
     },
     player: {
+        unlockedAttacks: ["Punch"],
         name: "User",
         hp: 10,
         maxHp: 10,
         level: 1,
         def: 2,
+        atk: 2,
 
         xp: 0,
         xpToNext: 10,
-        atk: 2,
         status: {},
+
+
+        levelRewards: [
+            { level: 1, def: 2 },
+            { level: 5, def: 4, unlock: "Backhand" },
+            { level: 10, def: 6, unlock: "Cut" },
+            { level: 15, def: 8, unlock: "Break armor" },
+            { level: 20, def: 10, unlock: "Pow" },
+        ],
 
         attacks: [
             {
                 name: "Punch",
-                power: 1
+                power: 1,
+                minLvl: 1,
             },
             {
                 name: "Backhand",
-                power: 2
+                power: 2,
+                minLvl: 5,
             },
             {
                 name: "Cut",
                 power: 3,
+                minLvl: 10,
                 effect: [
                     { type: "bleed", affects: "hp", value: 2, turns: 3 },
                 ]
@@ -35,9 +48,18 @@ const gameState = loadGame() || {
             {
                 name: "Break armor",
                 power: 0,
+                minLvl: 15,
                 atkType: "debuff",
                 effect: [
                     { type: "defDown", affects: "def", value: -2, turns: 3 },
+                ]
+            },
+            {
+                name: "Pow",
+                power: 10,
+                minLvl: 20,
+                effect: [
+                    { type: "bleed", affects: "hp", value: 5, turns: 2 },
                 ]
             },
         ]
@@ -105,7 +127,6 @@ const gameState = loadGame() || {
             status: {}
         },
     ],
-    defeatedEnemies: [],
     currentEnemyIndex: 0,
 };
 

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParaDies</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="app">
+
+        <!-- MENU -->
+        <section id="menu" class="active">
+            <h1 class="title">Para<span class="dies">Dies</span></h1>
+            <div class="menu-rule"></div>
+
+            <div class="name-row">
+                <label for="nameInput">Your name</label>
+                <input id="nameInput" maxlength="14" placeholder="" autocomplete="off">
+            </div>
+
+            <div class="btn-row">
+                <button class="btn primary" id="btnNew">New Game</button>
+                <button class="btn" id="btnContinue">Continue</button>
+            </div>
+            <div class="btn-row">
+                <button class="btn ghost" id="btnWipe">Erase Save</button>
+            </div>
+        </section>
+
+        <!-- HUB -->
+        <section id="hub" class="screen">
+            <div class="topbar">
+                <div class="stage-id">
+                    <div class="sub" id="hubStageSub">Stage I</div>
+                    <div class="name" id="hubStageName">The Outskirts</div>
+                </div>
+                <div class="meters">
+                    <div class="meter"><span class="k">Level</span><span class="v" id="hubLevel">1</span></div>
+                    <div class="meter"><span class="k">Gold</span><span class="v gold" id="hubGold">0</span></div>
+                    <div class="meter"><span class="k">HP</span><span class="v" id="hubHp">30/30</span></div>
+                </div>
+            </div>
+
+            <div class="stage-art" id="stageArt">
+                <div>
+                    <div class="where" id="artWhere">The Outskirts</div>
+                    <div class="blurb" id="artBlurb"></div>
+                </div>
+            </div>
+
+            <div class="hub-wrap">
+                <div class="section-label">Things to do</div>
+                <div class="tiles" id="opTiles"></div>
+                <div class="progress-note" id="progNote"></div>
+
+                <div class="section-label">Around here</div>
+                <div class="tiles" id="areaTiles"></div>
+
+                <div class="footer-actions">
+                    <button class="btn ghost" id="hubMenuBtn">Title Screen</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- BATTLE -->
+        <section id="battle" class="screen">
+            <div class="topbar">
+                <div class="stage-id">
+                    <div class="sub">Fight</div>
+                    <div class="name" id="battleTitle">Skirmish</div>
+                </div>
+                <div class="meters">
+                    <div class="meter"><span class="k">Level</span><span class="v" id="batLevel">1</span></div>
+                    <div class="meter"><span class="k">Foe</span><span class="v" id="batWave">1 / 1</span></div>
+                </div>
+            </div>
+
+            <div class="arena">
+                <div class="fighters">
+                    <div class="fighter player" id="playerCard">
+                        <div class="f-name" id="pName">You</div>
+                        <div class="f-role">insurgent</div>
+                        <div class="bar"><div class="fill hp" id="pHpFill"></div><div class="txt" id="pHpTxt"></div></div>
+                        <div class="f-stats"><span id="pAtk">ATK 3</span><span id="pDef">DEF 2</span></div>
+                        <div class="bar"><div class="fill xp" id="pXpFill"></div><div class="txt" id="pXpTxt"></div></div>
+                        <div class="f-status" id="pStatus"></div>
+                    </div>
+
+                    <div class="vs">vs</div>
+
+                    <div class="fighter enemy" id="enemyCard">
+                        <div class="f-name" id="eName">Soldier</div>
+                        <div class="f-role" id="eRole">soldier of Paradia</div>
+                        <div class="bar"><div class="fill hp" id="eHpFill"></div><div class="txt" id="eHpTxt"></div></div>
+                        <div class="f-stats"><span id="eAtk">ATK 1</span><span id="eDef">DEF 0</span></div>
+                        <div class="f-status" id="eStatus"></div>
+                    </div>
+                </div>
+
+                <div class="narrator" id="narrator">A soldier blocks your way.</div>
+                <div class="moves" id="moves"></div>
+            </div>
+        </section>
+
+        <!-- ENDING -->
+        <section id="ending">
+            <h1 class="end-title">Para<span class="x">Dies</span></h1>
+            <div class="end-body" id="endBody"></div>
+            <div class="btn-row" id="endChoices"></div>
+        </section>
+
+    </div>
+
+    <!-- OVERLAYS -->
+    <div class="overlay" id="storeOverlay">
+        <div class="panel">
+            <h2>The Shop</h2>
+            <div class="sub-h">Gold: <span id="storeGold">0</span></div>
+            <div id="storeItems"></div>
+            <div style="text-align:right; margin-top:8px"><button class="btn ghost" id="storeClose">Leave</button></div>
+        </div>
+    </div>
+
+    <div class="overlay" id="dlgOverlay">
+        <div class="panel">
+            <div class="dlg-speaker" id="dlgSpeaker"></div>
+            <div class="dlg-text" id="dlgText"></div>
+            <div class="dlg-foot">
+                <span class="dlg-prog" id="dlgProg"></span>
+                <button class="btn" id="dlgNext">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="clutchOverlay">
+        <div class="panel" id="clutchPanel">
+            <h2>You're going down!</h2>
+            <div class="hint">Use a healing item now — quick.</div>
+            <div class="clutch-track"><div id="clutchBar"></div></div>
+            <button id="clutchUse">Field Tonic (×<span id="clutchPotions">0</span>) — heal 18</button>
+        </div>
+    </div>
+
+    <div id="toast"></div>
+
+    <!-- load order matters: data + core first, main last -->
+    <script src="js/data.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/dialogue.js"></script>
+    <script src="js/hub.js"></script>
+    <script src="js/battle.js"></script>
+    <script src="js/ending.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

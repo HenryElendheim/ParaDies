@@ -48,6 +48,7 @@ const STAGES = [
             lines: [
                 { s: "Woman in the doorway", t: "Please..." },
                 { s: "Woman in the doorway", t: "Whatever you're after, it isn't here..." },
+                { s: "You", t: "Relax, I'm not here to hurt you." },
             ]
         },
         paper: {
@@ -68,11 +69,13 @@ const STAGES = [
             lines: [
                 { s: "A child", t: "U-uh..." },
                 { s: "A child", t: "A-are you..." },
-                { s: "A child", t: "The murderer...?" },
+                { s: "You", t: "I'm not the bad guy here if that's your question." },
+                { s: "You", t: "I'm saving you from these monsters." },
+                { s: "You", t: "You'll see one day." },
             ]
         },
         paper: {
-            name: "Paradise News",
+            name: "Paradise News", 
             lines: [
                 { s: "Paradise News", t: "Paradia will stand against this murderer roaming our streets. Be not afraid!" },
             ]
@@ -107,7 +110,11 @@ const STAGES = [
             name: "Old watchman",
             lines: [
                 { s: "Old watchman", t: "Hey..." },
-                { s: "Old watchman", t: "Please don't hurt me..." },
+                { s: "You", t: "Hi?" },
+                { s: "Old watchman", t: "..." },
+                { s: "You", t: "..." },
+                { s: "Old watchman", t: "Good luck..." },
+                { s: "You", t: "Thanks?" },
             ]
         },
         paper: {
